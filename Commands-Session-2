@@ -42,10 +42,49 @@
  kubectl get svc
  kubectl expose pod httpd-pod --port 80 --type NodePort --name httpd-svc --dry-run=client -o yaml > httpd-svc.yaml
  nano httpd-svc.yaml 
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: svc-1
+  name: httpd-svc
+spec:
+  ports:
+  - port: 80      #internal-port-of-svc
+    protocol: TCP
+    targetPort: 80    #container-port
+    nodePort: 30123   #30000-32767
+  selector:
+    run: httpd-pod       #pod-label
+  type: NodePort
+
+
+
  kubectl apply -f httpd-svc.yaml 
  kubectl get svc
  kubectl get node -o wide
  nano httpd-svc.yaml 
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: svc-1
+  name: httpd-svc
+spec:
+  ports:
+  - port: 80      #internal-port-of-svc
+    protocol: TCP
+    targetPort: 80    #container-port
+    nodePort: 30123   #30000-32767
+  selector:
+    run: httpd-pod       #pod-label
+  type: LoadBalancer  
+
+
  kubectl apply -f httpd-svc.yaml 
  kubectl get svc
  kubectl get svc httpd-svc -o yaml
