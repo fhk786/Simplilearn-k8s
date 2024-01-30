@@ -1,0 +1,54 @@
+ kubectl run pod-3 --image nginx
+ kubectl get pod
+ #kubectl run pod-3 --image nginx -n kube-system
+ kubectl get pod
+ kubectl get pod -o wide
+ kubectl get ns
+ kubectl create ns devops
+ kubectl get ns
+ kubectl get pod -n devops
+ kubectl get pod -n kube-system
+ kubectl run pod-3 --image nginx -n devops
+ kubectl get pod -n devops
+ kubectl -n devops describe pod pod-3
+ ls
+ nano multi-ctr.yaml 
+ kubectl apply -f multi-ctr.yaml 
+ kubectl get pod -n devops
+ clear
+ kubectl api-resources
+ clear
+ nano multi-ctr.yaml 
+ kubectl get pod -A
+ cat multi-ctr.yaml 
+ clear
+ kubectl get svc
+ kubectl get svc -n devops
+ kubectl get pod -n devops
+ kubectl -n devops expose pod pod-3 --help
+ kubectl -n devops expose pod pod-3 --port 80 --target-port 80 --name CL-svc
+ kubectl -n devops expose pod pod-3 --port 80 --target-port 80 --name cl-svc
+ kubectl get svc -n devops
+ kubectl describe svc cl-svc -n devops
+ kubectl get pod -o wide -n devops 
+ #kubectl -n devops run -it testpod --rm --restart=Never --image centos
+ kubectl run --help
+ clear
+ kubectl get pod -o wide -n devops 
+ kubectl describe svc cl-svc -n devops
+ kubectl -n devops run -it testpod --rm --restart=Never --image centos
+ clear
+ kubectl get pod
+ kubectl get svc
+ kubectl expose pod httpd-pod --port 80 --type NodePort --name httpd-svc --dry-run=client -o yaml > httpd-svc.yaml
+ nano httpd-svc.yaml 
+ kubectl apply -f httpd-svc.yaml 
+ kubectl get svc
+ kubectl get node -o wide
+ nano httpd-svc.yaml 
+ kubectl apply -f httpd-svc.yaml 
+ kubectl get svc
+ kubectl get svc httpd-svc -o yaml
+ kubectl get svc
+ kubectl get nodes -o wide
+ kubectl get svc
