@@ -102,4 +102,133 @@ spec:
  kubectl describe deploy nginx-deploy
  kubectl set image deploy nginx-deploy  ng-ctr=nginx:1.24.0  --record
  kubectl describe deploy nginx-deploy
- 
+  whoami
+ kubectl get nodes
+ sudo su 
+ cat .kube/config
+ clear
+ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+ kubectl get all -n kubernetes-dashboard
+ kubectl edit svc -n kubernetes-dashboard kubernetes-dashboard
+ kubectl get svc -n kubernetes-dashboard
+ clear
+ kubectl get pod -o wide -n kubernetes-dashboard
+ kubectl get nodes -o wide 
+ kubectl get svc -n kubernetes-dashboard
+ vi ServiceAccount.yaml
+ kubectl apply -f ServiceAccount.yaml
+ kubectl get sa -n kubernetes-dashboard
+ kubectl describe sa admin-user -n kubernetes-dashboard
+ vi ClusterRoleBinding.yaml
+ kubectl get clusterrole
+ kubectl describe clusterrole cluster-admin
+ cat ClusterRoleBinding.yaml 
+ kubectl apply -f ClusterRoleBinding.yaml 
+ kubectl -n kubernetes-dashboard create token admin-user
+ cat nginx-dep.yaml 
+ history 
+ kubectl get rolebinding -n kubernetes-dashboard
+ kubectl get rolebinding
+ cat ClusterRoleBinding.yaml 
+ kubectl get rolebinding -A
+ clear
+ kubectl create namespace role
+ kubectl get ns
+ mkdir role
+ cd role/
+ pwd
+ sudo openssl genrsa -out user3.key 2048
+ ls -l
+ sudo openssl req -new -key user3.key -out user3.csr
+ ls -l
+ sudo openssl x509 -req -in user3.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out user3.crt -days 500
+ #kubectl config set-credentials user3 --client-certificate=/home/labsuser/role/user3.crt --client-key=/home/labsuser/role/user3.key
+ ls -l
+ kubectl config set-credentials user3 --client-certificate=/home/labsuser/role/user3.crt --client-key=/home/labsuser/role/user3.key
+ kubectl config set-context user3-context --cluster=kubernetes --namespace=role --user=user3
+ kubectl config get-contexts
+ cat ~/.kube/config 
+ vi role.yaml
+ kubectl apply -f role.yaml 
+ kubectl get role -n role
+ vi rolebinding.yaml
+ kubectl apply -f rolebinding.yaml 
+ kubectl get rolebinding -n role
+ ls
+ ls -l
+ adduser user3
+ sudo adduser user3
+ sudo chown user3:user3 user3.crt 
+ sudo chown user3:user3 user3.csr 
+ sudo chown user3:user3 user3.key 
+ sudo user3
+ sudo su user3
+ cat ~/.kube/config 
+
+ sudo su user3
+ whoami
+ kubectl get nodes
+ sudo su 
+ cat .kube/config
+ clear
+ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+ kubectl get all -n kubernetes-dashboard
+ kubectl edit svc -n kubernetes-dashboard kubernetes-dashboard
+ kubectl get svc -n kubernetes-dashboard
+ clear
+ kubectl get pod -o wide -n kubernetes-dashboard
+ kubectl get nodes -o wide 
+ kubectl get svc -n kubernetes-dashboard
+ vi ServiceAccount.yaml
+ kubectl apply -f ServiceAccount.yaml
+ kubectl get sa -n kubernetes-dashboard
+ kubectl describe sa admin-user -n kubernetes-dashboard
+ vi ClusterRoleBinding.yaml
+ kubectl get clusterrole
+ kubectl describe clusterrole cluster-admin
+ cat ClusterRoleBinding.yaml 
+ kubectl apply -f ClusterRoleBinding.yaml 
+ kubectl -n kubernetes-dashboard create token admin-user
+ cat nginx-dep.yaml 
+ history 
+ kubectl get rolebinding -n kubernetes-dashboard
+ kubectl get rolebinding
+ cat ClusterRoleBinding.yaml 
+ kubectl get rolebinding -A
+ clear
+ kubectl create namespace role
+ kubectl get ns
+ mkdir role
+ cd role/
+ pwd
+ sudo openssl genrsa -out user3.key 2048
+ ls -l
+ sudo openssl req -new -key user3.key -out user3.csr
+ ls -l
+ sudo openssl x509 -req -in user3.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out user3.crt -days 500
+ #kubectl config set-credentials user3 --client-certificate=/home/labsuser/role/user3.crt --client-key=/home/labsuser/role/user3.key
+ ls -l
+ kubectl config set-credentials user3 --client-certificate=/home/labsuser/role/user3.crt --client-key=/home/labsuser/role/user3.key
+ kubectl config set-context user3-context --cluster=kubernetes --namespace=role --user=user3
+ kubectl config get-contexts
+ cat ~/.kube/config 
+ vi role.yaml
+ kubectl apply -f role.yaml 
+ kubectl get role -n role
+ vi rolebinding.yaml
+ kubectl apply -f rolebinding.yaml 
+ kubectl get rolebinding -n role
+ ls
+ ls -l
+ adduser user3
+ sudo adduser user3
+ sudo chown user3:user3 user3.crt 
+ sudo chown user3:user3 user3.csr 
+ sudo chown user3:user3 user3.key 
+ sudo user3
+ sudo su user3
+ cat ~/.kube/config 
+ sudo su user3
+
+
+
