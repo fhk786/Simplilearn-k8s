@@ -225,10 +225,11 @@ spec:
  sudo chown user3:user3 user3.crt 
  sudo chown user3:user3 user3.csr 
  sudo chown user3:user3 user3.key 
- sudo user3
  sudo su user3
- cat ~/.kube/config 
- sudo su user3
+vi ~/.kube/config 
+#copy paste the cluster info in ~/.kube/config or in new file myconfig
+ kubectl get pods  --kubeconfig ~/.kube/config
+ kubectl get pods  --kubeconfig myconfig
 
 
 
