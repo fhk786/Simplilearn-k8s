@@ -71,4 +71,35 @@ spec:
  kubectl rollout history deploy nginx-deploy
  kubectl describe deploy nginx-deploy
  nano nginx-dep.yaml 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deploy
+  name: nginx-deploy
+spec:
+  strategy:
+   type: Recreate
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-deploy
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy
+    spec:
+      containers:
+      - image: nginx:1.23.4
+        name: ng-ctr
+        ports:
+        - containerPort: 80
+
+ kubectl replace -f nginx-dep.yaml --force
+ nano nginx-dep.yaml 
+ kubectl replace -f nginx-dep.yaml --force
+ kubectl describe deploy nginx-deploy
+ kubectl set image deploy nginx-deploy  ng-ctr=nginx:1.24.0  --record
+ kubectl describe deploy nginx-deploy
  
