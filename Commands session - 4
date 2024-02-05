@@ -1,0 +1,88 @@
+nano init2-container.yaml
+kubectl apply -f init2-container.yaml 
+kubectl get pod
+kubectl get svc
+cat init2-container.yaml 
+kubectl describe pod myapp-pod
+vi myservice.yaml
+kubectl apply -f myservice.yaml 
+kubectl get svc
+kubectl get pod
+kubectl describe pod myapp-pod
+vi mydb.yaml
+kubectl apply -f mydb.yaml 
+kubectl get pod
+kubectl describe pod myapp-pod
+kubectl get pods -a -o wide
+kubectl get pods -A -o wide
+sudo ls  /etc/kubernetes/manifests/
+ls
+sudo cd /etc/kubernetes/manifests/
+sudo su
+ cd /etc/kubernetes/manifests/
+ ls
+ nano static-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: staticapache
+ labels:
+  Type: static
+spec:
+ containers:
+ - name: mycontainer
+   image: docker.io/httpd
+   ports:
+   - containerPort: 80
+
+
+ pwd
+ ls
+ exit
+
+kubectl get pods
+kubectl get pods -o wide
+sudo cat /etc/kubernetes/manifests/staticpod.yaml
+sudo cat /etc/kubernetes/manifests/static-pod.yaml
+kubectl get pods -o wide
+kubectl delete pod static2-pod-worker-node-2.example.com
+kubectl get pods -o wide
+clear
+nano mysql.yaml
+kubectl apply -f mysql.yaml 
+kubectl get pod
+kubectl expose deployment mysql --port=3306
+nano wordpredd.yaml
+kubectl apply -f wordpredd.yaml 
+kubectl get pod
+kubectl expose deployment wordpress --port=80 --type NodePort
+kubectl get svc
+kubectl get pod
+kubectl get pod -o wide | grep wordpress
+kubectl get pod -o wide | grep mysql
+kubectl describe svc mysql
+kubectl describe svc wordpress
+kubectl get nodes -o wide
+clear
+kubectl describe deploy wordpress
+kubectl rollout history deploy wordpress
+kubectl set image deploy wordpress wordpress=wordpress:php8.3-fpm --record
+kubectl rollout history deploy wordpress
+kubectl describe deploy wordpress
+kubectl rollout history deploy wordpress
+kubectl rollout undo deploy wordpress --to-revision 1
+kubectl rollout history deploy wordpress
+kubectl describe deploy wordpress
+kubectl get ds
+kubectl get ds -A
+vi ds.yaml
+kubectl apply -f ds.yaml 
+kubectl get ds -A
+kubectl get nodes
+kubectl get pods -o wide | grep frontend
+kubectl describe ds frontend
+kubectl get pods -o wide | grep frontend
+kubectl delete pod frontend-qwsnd
+kubectl get pods -o wide | grep frontend
+kubectl describe ds frontend
