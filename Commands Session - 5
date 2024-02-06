@@ -69,3 +69,63 @@ spec:
  kubectl get pod -w | grep cron
  kubectl get job 
  kubectl get cronjob 
+ kubectl get cm
+ nano cm.yaml
+ kubectl apply -f cm.yaml
+ kubectl get cm
+ kubectl describe cm example-configmap
+ nano configpod.yaml
+ kubectl apply -f configpod.yaml 
+ kubectl get pod
+ kubectl get pod | grep pod-env
+ kubectl exec -it pod-env-var -- bash
+ kubectl describe cm example-configmap
+ nano configpod.yaml 
+ kubecl apply -f configpod.yaml 
+ kubectl apply -f configpod.yaml 
+ kubectl get pod | grep pod-env
+ kubectl exec -it pod-env-var-2 -- bash
+ cat configpod.yaml 
+ kubectl exec -it pod-env-var-2 -- bash
+ kubectl get cm
+ kubectl describe cm kube-root-ca.crt
+ kubectl get pod
+ kubectl descirbe pod myapp-pod    
+ kubectl describe pod myapp-pod    
+ nano token
+ ls
+ clear
+ cat token 
+"This is testing for ConfigMap volume mouting"
+
+ kubectl create cm token-cm --help
+ kubectl create cm token-cm --from-file=token
+ kubectl get cm
+ kubectl describe cm token-cm
+ nano configpod.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+ name: pod-env-var-3
+spec:
+ volumes:
+ - name: token-configmap
+   configMap:
+     name: token-cm
+ containers:
+ - name: env-var-configmap
+   image: nginx:1.7.9
+   volumeMounts:
+   - name: token-configmap
+     mountPath: /var/data
+
+ kubectl apply -f configpod.yaml
+ 
+ kubectl get pod | grep pod-env
+ kubectl describe pod pod-env-var-3
+ kubectl exec -it pod-env-var-3 -- bash
+ cd /var/data/
+ ls
+ cat token 
+ exit
+
