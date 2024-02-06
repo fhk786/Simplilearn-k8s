@@ -1,0 +1,71 @@
+ kubectl get jobs -A
+ nano job.yaml
+ kubectl apply -f job.yaml 
+ nano job.yaml
+ kubectl apply -f job.yaml 
+ nano job.yaml
+ kubectl apply -f job.yaml 
+ kubectl get jobs 
+ kubectl get pods
+ kubectl describe jobs 
+ kubectl get pods
+ kubectl describe pod jobs-hello-2pbgr  
+ nano job.yaml
+ kubectl replace -f job.yaml --force
+ kubectl get pods -w
+ kubectl get pods 
+ kubectl get jobs
+ kubectl replace -f job.yaml --force
+ kubectl get jobs
+ kubectl get jobs -w
+ kubectl describe jobs
+ kubectl get jobs -o yaml
+ kubectl get jobs 
+ kubectl get pods
+ kubectl logs jobs-hello-56d6b
+ kubectl get jobs -o yaml
+ clear
+ cat /etc/crontab 
+ kubectl get cronjob
+ kubectl get job
+ kubectl delete jobs jobs-hello
+ nano cronjob.yaml
+ kubectl apply -f cronjob.yaml 
+ kubectl get cronjob
+ kubectl get job
+ kubectl get pod
+ kubectl logs cronjob-hello-28453584-ffspv 
+ kubectl get job
+ kubectl get job -w
+ cat cronjob.yaml 
+ nano cronjob.yaml 
+ kubectl apply -f cronjob.yaml 
+ nano cronjob.yaml 
+
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-hello
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished:  60
+      template:
+        spec:
+          containers:
+          - name: cronjob-ctr
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - echo Hello World!
+          restartPolicy: OnFailure
+
+
+ kubectl apply -f cronjob.yaml 
+ kubectl get job -w
+ kubectl get pod -w | grep cron
+ kubectl get job 
+ kubectl get cronjob 
