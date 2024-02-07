@@ -1,0 +1,30 @@
+ nano liveness.yaml
+ kubectl apply -f liveness.yaml 
+ kubectl get pod | grep live
+ kubectl describe pod liveness-pod
+
+kubectl exec -it liveness-pod -- sh
+  cd /
+  ls 
+  rm -rf readiness 
+  exit
+
+
+ kubectl get pod | grep live
+ kubectl describe pod liveness-pod
+ nano readiness.yaml
+ kubectl apply -f readiness.yaml 
+ kubectl get pod | grep readi
+ kubectl get pod -o wide | grep readi
+ kubectl expose pod readiness-pod --port 80  
+ kubectl get svc | grep readines
+ kubectl describe svc readiness-pod
+ 
+ kubectl exec -it readiness-pod -- bash
+  cd /
+  ls 
+  rm -rf readiness 
+  exit
+
+ kubectl describe pod readiness-pod
+ kubectl describe svc readiness-pod
