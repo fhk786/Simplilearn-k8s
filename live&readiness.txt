@@ -28,7 +28,7 @@ spec:
 
 kubectl create -f liveness-pod.yaml
 kubectl get pods	  
-kubectl describe pod liveness-exec
+kubectl describe pod liveness-pod
  
 now login to container and delete following file
 kubectl exec -it liveness-pod sh 
@@ -36,7 +36,7 @@ kubectl exec -it liveness-pod sh
 # exit
 
 kubectl get pods
-kubectl describe pod liveness-exec
+kubectl describe pod liveness-pod
 
 you can see pod is getting restarted
 
