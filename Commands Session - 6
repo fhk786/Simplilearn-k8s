@@ -28,3 +28,104 @@ kubectl exec -it liveness-pod -- sh
 
  kubectl describe pod readiness-pod
  kubectl describe svc readiness-pod
+
+ kubectl get nodes
+ kubeadm version
+ sudo apt update
+ apt-cache madison kubeadm
+ sudo apt-mark unhold kubeadm
+ sudo apt-get install -y kubeadm='1.28.3-1.1'
+ kubeadm version
+ sudo apt-mark hold kubeadm
+ sudo kubeadm upgrade plan
+ sudo kubeadm upgrade apply v1.28.3
+ kubectl get nodes
+ kubectl drain master.example.com --ignore-daemonsets
+ sudo apt-mark unhold kubelet kubectl
+ sudo apt-get install -y kubelet='1.28.3-1.1' kubectl='1.28.3-1.1'
+ sudo apt-mark hold kubelet kubectl
+ sudo systemctl daemon-reload 
+ sudo systemctl restart kubelet
+ kubectl get nodes
+ kubectl uncordon master.example.com
+ kubectl get no
+ kubectl get pod -o wide
+ kubectl drain worker-node-1.example.com --ignore-daemonsets --delete-emptydir-data
+ kubectl get pod -o wide
+ kubectl drain worker-node-1.example.com --ignore-daemonsets --delete-emptydir-data --force
+ kubectl get nodes
+ kubectl uncordon worker-node-1.example.com
+ kubectl get nodes
+ kubectl drain worker-node-2.example.com --ignore-daemonsets --delete-emptydir-data --force
+ kubectl get nodes
+ kubectl uncordon worker-node-2.example.com
+ kubectl get nodes
+ history 
+ clear
+ kubectl get nodes --show-labels
+ kubectl label node worker-node-1.example.com disktype=ssd ram=32Gi
+ kubectl label node worker-node-2.example.com disktype=hdd ram=16Gi
+ kubectl get nodes --show-labels | grep ram
+ kubectl label node worker-node-2.example.com env=simplilearm
+ nano nodename.yaml
+ kubectl apply -f nodename.yaml 
+ kubectl get pod -o wide
+ nano nodename.yaml
+ kubectl get nodes --show-labels | grep simpli
+ kubectl label node worker-node-2.example.com env-
+ kubectl get nodes --show-labels | grep simpli
+ kubectl apply -f nodename.yaml 
+ kubectl get pod -o wide | grep ngi
+ cat nodename.yaml 
+ kubectl label node worker-node-2.example.com env=simplilearm
+ kubectl get pod -o wide | grep ngi
+ kubectl label node worker-node-2.example.com env-
+ kubectl label node worker-
+ kubectl get pod -o wide | grep ngi
+ clear
+ nano na-pod.yaml
+ kubectl get nodes --show-labels | grep disktyp
+ kubectl apply -f na-pod.yaml 
+ nano na-pod.yaml
+ kubectl apply -f na-pod.yaml 
+ kubectl get pod -o wide | grep na
+ kubectl label node worker-node-2.example.com disktype-
+ kubectl label node worker-node-1.example.com disktype-
+ kubectl get pod -o wide | grep na
+ kubectl get nodes --show-labels | grep disktyp
+ kubectl replace -f na-pod.yaml  -force
+ kubectl replace -f na-pod.yaml  --force
+ kubectl get nodes --show-labels | grep disktyp
+ kubectl get pod -o wide | grep na
+ nano na-pod1.yaml
+ kubectl apply -f na-pod1.yaml 
+ kubectl get pod -o wide | grep na
+ nano anti-pod1.yaml
+ kubectl label node worker-node-1.example.com disktype=ssd
+ kubectl label node worker-node-2.example.com disktype=ssd
+ kubectl get nodes --show-labels | grep disktyp
+ cat anti-pod1.yaml 
+ kubectl apply -f anti-pod1.yaml 
+ kubectl get pod -o wide | grep na
+ nano anti-pod2.yaml
+ kubectl applt anti-pod2.yaml 
+ kubectl apply -f  anti-pod2.yaml 
+ kubectl get pod -o wide | grep na
+ cat anti-pod2.yaml 
+ clear
+ kubectl get pods --show labels
+ kubectl get pods --show-labels
+ kubectl get pods -o wide --show-labels
+ clear
+ kubectl run test-pod1 --image nginx -l tier=fronend
+ kubectl get pods -o wide --show-labels | grep test
+ nano pod-affi.yaml
+ kubectl apply -f pod-affi.yaml 
+ kubectl get pod -o wide 
+ nano pod-affi.yaml
+ kubectl replace -f pod-affi.yaml --force
+ kubectl get pod -o wide 
+ nano pod-affi.yaml
+ kubectl apply -f pod-affi.yaml 
+ kubectl get pod -o wide 
+ kubectl get pod --show-labels -o wide | grep tier
