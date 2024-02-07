@@ -25,7 +25,8 @@ spec:
         - /liveness
       initialDelaySeconds: 5
       periodSeconds: 5
-	  
+
+kubectl create -f liveness-pod.yaml
 kubectl get pods	  
 kubectl describe pod liveness-exec
  
@@ -35,6 +36,8 @@ kubectl exec -it liveness-pod sh
 # exit
 
 kubectl get pods
+kubectl describe pod liveness-exec
+
 you can see pod is getting restarted
 
  
@@ -68,6 +71,8 @@ spec:
 kubectl create -f readiness.yaml
 kubectl get pods
 
+kubectl expose pod readiness-pod --port 80
+kubectl get svc
 
 login inside pod and delete folloing file 
 
@@ -78,6 +83,8 @@ kubectl exec -it readiness-pod bash
 
 View the Pod events and see that readiness probe has failed
 kubectl describe pods readiness-pod
+
+
 
 now describe service
 kubectl describe svc readiness-svc
