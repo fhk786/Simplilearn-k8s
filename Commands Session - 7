@@ -69,3 +69,81 @@ spec:
  kubectl get quota -n quotaz-ns
  nano rc-pod.yaml 
  kubectl apply -f rc-pod.yaml 
+
+## Security context
+
+nano security-context.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: security-context-1
+spec:
+ securityContext:
+  fsGroup: 2000
+ volumes:
+ - name: sec-ctx-vol
+   emptyDir: {}
+ containers:
+ - name: sec-ctx-demo-1
+   image: busybox:1.28
+   command: [ "sh", "-c", "sleep 1h" ]
+   volumeMounts:
+   - name: sec-ctx-vol
+     mountPath: /data/demo
+   securityContext:
+     allowPrivilegeEscalation: false
+     runAsUser: 1001   #UID
+     runAsGroup: 3001  #GID
+ - name: sec-ctx-demo-2
+   image: busybox:1.28
+   command: [ "sh", "-c", "sleep 1h" ]
+   volumeMounts:
+   - name: sec-ctx-vol
+     mountPath: /data/demo
+   securityContext:
+     allowPrivilegeEscalation: false
+     runAsUser: 1002   #UID
+     runAsGroup: 3002  #GID
+     capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]
+
+
+ kubectl apply -f security-context.yaml 
+
+ kubectl get pod
+
+ kubectl describe pod security-context-1
+
+
+ kubectl exec -it security-context-1 -c sec-ctx-demo-1 -- sh
+  cd data/demo/
+  id
+  ls -l
+  echo hello > file2
+  ls -l
+  exit
+
+kubectl exec -it security-context-1 -c sec-ctx-demo-2 -- sh
+  cd data/demo/
+  id
+  ls -l
+  echo hello > file2
+  ls -l
+  exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
