@@ -1,0 +1,71 @@
+ kubectl api-resources
+ clear
+ kubectl get pod
+ kubectl get ns
+ kubectl create ns quotaz-ns
+ kubectl describe ns quotaz-ns
+ kubectl get quota -n quotaz-ns
+ vi resourcequota.yaml
+ kubectl apply -f resourcequota.yaml 
+
+ vi resourcequota.yaml
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+ name: mem-cpu-demo
+ namespace: quotaz-ns
+spec:
+ hard:
+  requests.cpu: "1"
+  requests.memory: 1Gi
+  limits.cpu: "2"
+  limits.memory: 2Gi
+  pods: "2"
+  count/deployments.apps: "1"
+  services: "2"
+
+ kubectl apply -f resourcequota.yaml 
+ kubectl get quota -n quotaz-ns
+ kubectl describe quota -n quotaz-ns
+ kubectl describe ns quotaz-ns
+
+ vi rc-pod.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: quota-pod-1
+ namespace: quotaz-ns
+spec:
+ containers:
+ - name: quota-mem-cpu-demo-ctr
+   image: nginx
+   resources:
+    limits:
+      cpu: "150m"
+      memory: "210Mi"
+    requests:
+      memory: "200Mi"
+      cpu: "100m"
+
+
+ kubectl apply -f rc-pod.yaml 
+ kubectl get pod -n quotaz-ns
+ kubectl get quota -n quotaz-ns
+ kubectl describe ns quotaz-ns
+ kubectl -n quotaz-ns expose pod quota-pod-1 --por t80
+ kubectl -n quotaz-ns expose pod quota-pod-1 --port 80
+ kubectl -n quotaz-ns label pod quota-pod-1  type=demo
+ kubectl -n quotaz-ns expose pod quota-pod-1 --port 80
+ kubectl describe ns quotaz-ns
+ nano rc-pod.yaml 
+ kubectl apply -f rc-pod.yaml 
+ kubectl get quota -n quotaz-ns
+ nano rc-pod.yaml 
+ kubectl apply -f rc-pod.yaml 
+ nano rc-pod.yaml 
+ kubectl apply -f rc-pod.yaml 
+ kubectl get quota -n quotaz-ns
+ nano rc-pod.yaml 
+ kubectl apply -f rc-pod.yaml 
