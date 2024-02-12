@@ -12,7 +12,7 @@ globalDefault: false
 description: "This priority class should be used for ngnix service pods only."
 
 
-
+ kubectl apply -f low-priority-class.yaml 
 
 vi high-priority-class.yaml 
 
@@ -25,7 +25,9 @@ globalDefault: false
 description: "This priority class should be used for ngnix service pods only."
 
 
-vi low-pririty-deploy.yaml
+kubectl apply -f high-priority-class.yaml 
+
+vi low-priority-deploy.yaml
 
 apiVersion: apps/v1
 kind: Deployment
@@ -57,8 +59,11 @@ spec:
             memory: 400Mi
 
 
+kubectl apply -f low-priority-deploy.yaml 
 
-vi high-pririty-deploy.yaml
+kubectl get pods -o wide
+
+vi high-priority-deploy.yaml
 
 apiVersion: apps/v1
 kind: Deployment
@@ -89,6 +94,8 @@ spec:
             cpu: 100m
             memory: 400Mi
 
+kubectl apply -f high-priority-deploy.yaml
 
 
+kubectl get pods -o wide
 
