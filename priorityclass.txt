@@ -1,0 +1,94 @@
+
+
+
+vi low-priority-class.yaml 
+
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+ name: low-priority
+value:  500
+globalDefault: false
+description: "This priority class should be used for ngnix service pods only."
+
+
+
+
+vi high-priority-class.yaml 
+
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+ name: high-priority
+value:  1000
+globalDefault: false
+description: "This priority class should be used for ngnix service pods only."
+
+
+vi low-pririty-deploy.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ng-deploy
+  name: low-priority-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ng-pod
+  template:
+    metadata:
+      labels:
+        app: ng-pod
+    spec:
+      nodeSelector:
+        ram: 32Gi
+      priorityClassName: low-priority
+      containers:
+      - image: nginx
+        name: nginx-ctr
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 400Mi
+
+
+
+vi high-pririty-deploy.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ng-deploy
+  name: high-priority-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: ng-pod
+  template:
+    metadata:
+      labels:
+        app: ng-pod
+    spec:
+      nodeSelector:
+        ram: 32Gi
+      priorityClassName: high-priority
+      containers:
+      - image: nginx
+        name: nginx-ctr
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 400Mi
+
+
+
+
