@@ -244,3 +244,32 @@ spec:
  kubectl describe svc multiport-ap-svc 
  curl 192.168.47.154:80
  curl 192.168.47.154:8080
+
+####DNS in K8S############
+ clear
+ kubectl get pods -o wide | grep dns
+ kubectl get pods -A -o wide | grep dns
+ kubectl get svc -A
+ clear
+ kubectl get pods -A -o wide | grep dns
+ kubectl get svc -A | grep dns
+ kubectl -n kube-system get ep kube-dns
+ kubectl get po
+ kubectl exec -it demo-pod-1  -- bash
+ nslookup google.com
+ cat /etc/resolv.conf 
+ clear
+ vi dnspolicy.yaml
+ kubectl apply -f dnspolicy.yaml 
+ kubeclt get pod
+ kubectl get pod
+ kubectl get pod busybox -o yaml
+ clear
+ vi newpod.yaml
+ kubectl apply -f newpod.yaml 
+ vi newpod.yaml
+ kubectl apply -f newpod.yaml 
+ kubectl get pods
+ kubectl exec -it dnscustomconfig -- bash
+ nslookup yahoo.com
+
