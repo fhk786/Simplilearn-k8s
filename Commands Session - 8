@@ -1,0 +1,112 @@
+####Ingress Policy#####
+ kubectl run sl-pod --image=nginx --labels="app=simplilearn" --expose --port=80
+ kubectl get pods,svc
+ kubectl run --rm -it --image=alpine test-$RANDOM -- sh
+    wget http://sl-pod
+    exit
+
+ kubectl get networkpolicy
+
+ nano simplilearn-deny-all.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: simplilearn-deny-all
+spec:
+ podSelector:
+  matchLabels:
+   app: simplilearn
+ ingress: []
+
+
+ kubectl apply -f simplilearn-deny-all.yaml 
+
+ kubectl get networkpolicy
+ kubectl describe networkpolicy
+
+ kubectl run --rm -it --image=alpine test-$RANDOM -- sh
+    wget http://sl-pod
+    exit
+
+ nano simplilearn-deny-all.yaml 
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: simplilearn-deny-all
+spec:
+ podSelector: 
+  matchLabels:
+   app: simplilearn
+ ingress:
+ - from:
+   - podSelector:
+      matchLabels:
+       role: cka
+
+ kubectl apply -f simplilearn-deny-all.yaml 
+ kubectl describe networkpolicy
+
+ kubectl run --rm -it --image=alpine test-$RANDOM --labels="role=cka" -- sh
+    wget http://sl-pod or <ServiceIP>
+    exit
+ kubectl run --rm -it --image=alpine test-$RANDOM --labels="role=k8s" -- sh
+    wget http://sl-pod
+    exit
+
+ kubectl get pods
+ kubectl create ns devops
+ kubectl label ns devops type=dev-ns
+ kubectl get ns --show-labels | grep dev
+ nano simplilearn-deny-all.yaml 
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: simplilearn-deny-all
+spec:
+ podSelector: 
+  matchLabels:
+   app: simplilearn
+ ingress:
+ - from:
+   - podSelector:
+      matchLabels:
+       role: cka
+   - namespaceSelector:
+      matchLabels:
+       type: dev-ns
+
+ kubectl apply -f simplilearn-deny-all.yaml 
+
+ kubectl describe networkpolicy
+
+ kubectl -n devops run test-pod-1 --rm -it --image alpine -- sh
+    wget http://sl-pod or <ServiceIP>
+    exit
+
+###Egress Policy###
+ kubectl run demo-pod-1 --image centos -- sleep 6000
+ kubectl get po
+ kubectl exec -it demo-pod-1 -- bash
+ nano egress.yaml
+ kubectl get po --show-labels | grep demo-pod
+
+ kubectl exec -it demo-pod-1 -- bash
+    ping 8.8.8.8 -c2
+    ping yahoo.com -c2
+    exit
+
+ nano egress.yaml 
+
+ kubectl apply -f egress.yaml 
+
+ kubectl get networkpolicy
+
+ kubectl describe networkpolicy test-network-policy
+
+ kubectl exec -it demo-pod-1 -- bash
+    ping 8.8.8.8 -c2
+    ping yahoo.com -c2
+    exit
