@@ -110,3 +110,137 @@ spec:
     ping 8.8.8.8 -c2
     ping yahoo.com -c2
     exit
+
+########Ingress controller############
+
+ kubectl create deployment myapp1 --image=docker.io/httpd
+ kubectl create deployment myapp2 --image=docker.io/openshift/hello-openshift
+ kubectl expose deployment myapp1 --port=80
+ kubectl expose deployment myapp2 --port=8080
+ kubectl get svc
+ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
+ kubectl -n ingress-nginx get po
+ kubectl -n ingress-nginx get svc
+ kubectl -n ingress-nginx edit svc ingress-nginx-controller
+ kubectl -n ingress-nginx get svc
+ mkdir ingress1
+ cd ingress1/
+ pwd
+ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ingress.key -out ingress.crt -subj "/CN=master.example.com/O=security"
+ ls
+ kubectl create secret tls tls-cert --key ingress.key --cert ingress.crt
+ vi rule.yaml
+ kubectl get svc
+ cat rule.yaml 
+ kubectl get ingressclass
+ kubectl apply -f rule.yaml 
+ vi rule.yaml 
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+ annotations:
+   nginx.ingress.kubernetes.io/rewrite-target: /$2
+ name: rewrite
+spec:
+ tls:
+ - hosts:
+   - master.example.com
+   secretName: tls-cert
+ ingressClassName: nginx
+ rules:
+ - host: master.example.com
+   http:
+    paths:
+     - path: /
+       pathType: Prefix
+       backend:
+        service:
+         name: myapp1
+         port:
+           number: 80
+     - path: /test
+       pathType: Prefix
+       backend:
+        service:
+         name: myapp2
+         port:
+           number: 8080
+
+
+ kubectl apply -f rule.yaml 
+ vi rule.yaml 
+ kubectl apply -f rule.yaml 
+ kubectl get ingress
+ kubectl describe ingress
+ kubectl -n ingress-nginx get svc
+ curl http://10.101.58.254:30501/
+ curl http://10.101.58.254:30501/test
+ curl https://10.101.58.254:30501/test
+ curl http://master.example.com:30501/
+ curl http://master.example.com:30501/test
+ curl https://master.example.com:31843/test
+ curl -k https://master.example.com:31843/test
+ curl -k https://master.example.com:31843/
+ kubectl get nodes -o wide
+ 
+###Multiport Service###########
+ kubectl -n ingress-nginx get svc
+ kubectl -n ingress-nginx get svc ingress-nginx-controller -o yaml
+
+ vi multiport-dep.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: multiport-pod
+  name: multiport-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiport-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: multiport-app
+    spec:
+      containers:
+      - image: docker.io/openshift/hello-openshift
+        name: hello-openshift
+      - image: nginx
+        name: ctr-2
+
+ kubectl apply -f multiport-dep.yaml 
+ kubectl get pod
+
+ vi multiport.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: multiport-ap-svc
+spec:
+  type: NodePort
+  selector:
+     app: multiport-app
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: port2
+      protocol: TCP
+      port: 80
+      targetPort: 80
+
+ kubectl apply -f multiport
+ kubectl apply -f multiport.yaml 
+ kubectl get svc
+ kubectl get pod -o wide | grep multi
+ kubectl describe svc multiport-ap-svc | grep multi
+ kubectl describe svc multiport-ap-svc 
+ curl 192.168.47.154:80
+ curl 192.168.47.154:8080
