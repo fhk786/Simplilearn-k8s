@@ -1,0 +1,42 @@
+###ETCD Backup and Restore###  
+
+ kubectl run pod-1 --image nginx
+   kubectl run pod-2 --image nginx
+
+  kubectl get pods
+
+  sudo apt install etcd-client
+
+  kubectl get pods -A | grep etcd
+  kubectl -n kube-system describe pod etcd-controlplane 
+
+  export advertise_url=https://172.30.1.2:2379
+  echo $advertise_url 
+
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt snapshot save etcd_backup.db
+
+ls
+
+kubectl get pod
+
+kubectl delete po --all
+
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt --write-out=table snapshot status
+
+cat /var/lib/etcd/
+
+ls /var/lib/etcd/
+
+kubectl -n kube-system describe pod etcd-controlplane 
+kubectl get pod
+ls /var/lib/etcd/
+
+sudo rm -rf /var/lib/etcd
+ls /var/lib/
+
+sudo ETCDCTL_API=3 etcdctl --endpoints $advertise_url --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key --cert /etc/kubernetes/pki/etcd/server.crt snapshot restore etcd_backup.db --data-dir /var/lib/etcd
+
+
+ kubectl get pods
