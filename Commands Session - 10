@@ -1,0 +1,50 @@
+ az account set --subscription 68935282-1333-425e-b690-12725bf9c8d4
+ az aks get-credentials --resource-group simplilearn-rg --name sl-cluster --overwrite-existing
+ az aks --help
+ az aks  list --help
+ az aks  list  --resource-group simplilearn-rg -o table
+ kubectl get nodes
+ kubectl cluster-info
+ kubectl top nodes
+ kubectl cluster-info dump
+ kubectl top nodes
+ kubectl get pods
+ kubectl get pods -n devops
+ clear
+ kubectl get sc
+ kubectl describe sc azurefile-premium
+ kubectl get pv
+ kubectl get pvc
+ vi azure-premium.yaml
+ kubectl apply -f azure-premium.yaml 
+ kubectl get pvc
+ kubectl get pv
+ vi azure-pvc-disk.yaml
+ kubectl apply -f azure-pvc-disk.yaml 
+ kubectl get pv
+ kubectl get pvc
+ kubectl get pv
+ cat azure-pvc-disk.yaml 
+ clear
+ kubectl get pods
+ kubectl logs mypod
+ kubectl logs mypod -n devops
+ kubectl get pods -n devops
+ kubectl logs pods -n devops
+ kubectl logs multi-port -n devops
+ kubectl top nodes
+ kubectl top pod -A
+ kubectl top pod -A --sort-by memory
+ kubectl top pod -A --sort-by cpu
+ clear
+ kubectl -n devops get all
+ kubectl -n kube-system get all
+ kubectl -n kube-system describe pod ama-logs-t8sds  
+ kubectl -n kube-system logs ama-logs-t8sds  
+ history 
+ kubectl -n kube-system top pod
+ kubectl -n kube-system top pod -o wide
+ kubectl -n kube-system get pod -o wide
+ kubectl get nodes
+ kubectl describe nodes aks-agentpool-19249084-vmss000003 
+ kubectl get nodes
